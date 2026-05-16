@@ -41,7 +41,69 @@ x-panclaw-approval-token: <PANCLAW_APPROVAL_TOKEN>
 
 ## WeChat Personal Account
 
-PanClaw does not automate personal WeChat accounts. There is no enabled personal-account plugin that drives a user account through reverse-engineered protocols, Web hooks, desktop control or QR session hijacking.
+As of 2026-05-16, PanClaw treats `Tencent/openclaw-weixin` as the official personal WeChat plugin boundary for OpenClaw.
+
+Source:
+
+```text
+https://github.com/Tencent/openclaw-weixin
+```
+
+Official package names:
+
+```text
+@tencent-weixin/openclaw-weixin
+@tencent-weixin/openclaw-weixin-cli
+```
+
+PanClaw still does not use reverse-engineered personal WeChat protocols, desktop click automation or QR session hijacking. It delegates personal WeChat connectivity to Tencent's official OpenClaw Weixin plugin.
+
+Quick install dry-run:
+
+```bash
+env PYTHONPATH=src python3 -m panclaw run messaging.wechat.personal.openclaw_weixin.quick_install
+```
+
+Manual install dry-run:
+
+```bash
+env PYTHONPATH=src python3 -m panclaw run messaging.wechat.personal.openclaw_weixin.manual_install
+```
+
+QR login dry-run:
+
+```bash
+env PYTHONPATH=src python3 -m panclaw run messaging.wechat.personal.openclaw_weixin.login
+```
+
+Real execution requires:
+
+```bash
+PANCLAW_ENABLE_OPENCLAW_PLUGIN_MUTATION=1
+PANCLAW_APPROVAL_TOKEN=...
+```
+
+Then pass `--execute --approval-token <token>`.
+
+The official manual flow is:
+
+```bash
+npx -y @tencent-weixin/openclaw-weixin-cli install
+
+openclaw plugins install "@tencent-weixin/openclaw-weixin"
+openclaw config set plugins.entries.openclaw-weixin.enabled true
+openclaw channels login --channel openclaw-weixin
+openclaw gateway restart
+```
+
+For multiple WeChat accounts, use:
+
+```bash
+openclaw channels login --channel openclaw-weixin
+openclaw config set session.dmScope per-account-channel-peer
+```
+
+## WeChat Official Account
 
 Supported official WeChat boundary:
 
@@ -57,7 +119,7 @@ WECHAT_OFFICIAL_ACCESS_TOKEN=...
 PANCLAW_ENABLE_MESSAGE_SEND=1
 ```
 
-Callback URL:
+Official Account callback URL:
 
 ```text
 GET/POST http://127.0.0.1:8787/channels/wechat/official/callback
@@ -161,4 +223,3 @@ Real sending requires all of:
 - `PANCLAW_ENABLE_MESSAGE_SEND=1`
 - matching `x-panclaw-approval-token` or CLI `--approval-token`
 - configured official webhook/API credential
-

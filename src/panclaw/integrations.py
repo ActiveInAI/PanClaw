@@ -54,6 +54,22 @@ def plugin_manifest(base_url: str = DEFAULT_BASE_URL) -> dict[str, Any]:
         "base_url": base_url,
         "channels": [
             {
+                "id": "wechat_personal_openclaw_weixin",
+                "name": "Personal WeChat via Tencent openclaw-weixin",
+                "plugin_package": "@tencent-weixin/openclaw-weixin",
+                "cli_package": "@tencent-weixin/openclaw-weixin-cli",
+                "source": "https://github.com/Tencent/openclaw-weixin",
+                "channel_id": "openclaw-weixin",
+                "capabilities": ["qr_login", "receive_message", "send_message", "media_message", "multi_account"],
+                "official_boundary": True,
+                "skills": [
+                    "messaging.wechat.personal.openclaw_weixin.quick_install",
+                    "messaging.wechat.personal.openclaw_weixin.manual_install",
+                    "messaging.wechat.personal.openclaw_weixin.login",
+                    "messaging.wechat.personal.openclaw_weixin.status",
+                ],
+            },
+            {
                 "id": "wechat_official",
                 "name": "WeChat Official Account",
                 "callback": f"{base_url}/channels/wechat/official/callback",
@@ -135,4 +151,3 @@ def _skill_to_hermes_tool(skill: Any, base_url: str) -> dict[str, Any]:
             "approval_required": skill.approval_required,
         },
     }
-

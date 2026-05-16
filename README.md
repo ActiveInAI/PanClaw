@@ -11,7 +11,7 @@ It is a standard API and Python skill registry for office files, media, browser 
 - `API`: `GET /health`, `GET /skills`, `GET /skills/{id}`, `POST /skills/{id}/run`.
 - `Integrations`: OpenClaw manifest, Hermes Agent tool manifest and official channel plugin manifest.
 - `CLI`: list, show, run, serve, export OpenClaw, export Hermes and export channel plugin metadata.
-- `Messaging`: WeChat Official Account, WeCom, Feishu, Lark and DingTalk official adapters; personal WeChat account automation is blocked.
+- `Messaging`: Tencent official personal WeChat OpenClaw plugin, WeChat Official Account, WeCom, Feishu, Lark and DingTalk official adapters.
 
 ## Quick Start
 
@@ -23,6 +23,7 @@ env PYTHONPATH=src python3 -m panclaw run observability.local.snapshot --payload
 env PYTHONPATH=src python3 -m panclaw export-openclaw
 env PYTHONPATH=src python3 -m panclaw export-hermes
 env PYTHONPATH=src python3 -m panclaw export-plugins
+env PYTHONPATH=src python3 -m panclaw run messaging.wechat.personal.openclaw_weixin.quick_install
 env PYTHONPATH=src python3 -m panclaw serve --host 127.0.0.1 --port 8787
 ```
 

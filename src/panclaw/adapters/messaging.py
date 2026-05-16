@@ -10,15 +10,14 @@ from .base import blocked, dry_run, not_configured, require_enabled, require_env
 
 
 def wechat_personal_boundary(payload: dict[str, Any]) -> dict[str, Any]:
-    return blocked(
-        "Personal WeChat automation is disabled until a compliant official API path is configured.",
-        allowed_paths=[
-            "WeChat Official Account / Mini Program APIs where applicable",
-            "WeCom official APIs",
-            "OpenClaw channel adapter only after terms and security review",
-        ],
-        dry_run=payload.get("dry_run", True),
-    )
+    return {
+        "status": "ok",
+        "message": "Personal WeChat is supported through Tencent's official openclaw-weixin plugin boundary.",
+        "plugin_package": "@tencent-weixin/openclaw-weixin",
+        "cli_package": "@tencent-weixin/openclaw-weixin-cli",
+        "source": "https://github.com/Tencent/openclaw-weixin",
+        "dry_run": payload.get("dry_run", True),
+    }
 
 
 def _post_json(url: str, body: dict[str, Any]) -> dict[str, Any]:

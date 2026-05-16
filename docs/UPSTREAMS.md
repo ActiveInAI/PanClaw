@@ -4,7 +4,8 @@ Verified on 2026-05-16:
 
 - OpenClaw: `openclaw/openclaw`, MIT, local-first personal AI assistant with channels and skills.
 - Hermes Agent selected target: `NousResearch/hermes-agent`, not the low-signal `hermesagent` user account.
-- WeChat official boundary: Official Account/Open Platform APIs only; personal account reverse engineering is excluded.
+- Personal WeChat official plugin: `Tencent/openclaw-weixin`, package `@tencent-weixin/openclaw-weixin`, QR login via OpenClaw channel plugin.
+- WeChat Official Account/Open Platform APIs remain supported separately.
 - WeCom group robot webhook: official WeCom developer documentation boundary.
 - Feishu custom bot webhook: official Feishu Open Platform boundary.
 - Lark custom bot webhook: official Lark Open Platform boundary.

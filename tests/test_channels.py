@@ -57,12 +57,25 @@ class ChannelTests(unittest.TestCase):
         result = run_skill("messaging.lark.webhook.send", {"dry_run": True, "text": "hello"})
         self.assertEqual(result.status, "dry_run")
 
+    def test_official_personal_wechat_plugin_skills(self) -> None:
+        info = run_skill("messaging.wechat.personal.openclaw_weixin.info", {"dry_run": True})
+        self.assertEqual(info.status, "ok")
+        self.assertEqual(info.data["plugin_package"], "@tencent-weixin/openclaw-weixin")
+
+        install = run_skill("messaging.wechat.personal.openclaw_weixin.quick_install", {"dry_run": True})
+        self.assertEqual(install.status, "dry_run")
+        self.assertIn("@tencent-weixin/openclaw-weixin-cli", install.data["commands"][0])
+
+        blocked = run_skill("messaging.wechat.personal.openclaw_weixin.quick_install", {"dry_run": False})
+        self.assertEqual(blocked.status, "approval_required")
+
     def test_manifests_include_plugins(self) -> None:
         self.assertGreater(len(openclaw_manifest()["skills"]), 1)
         hermes = hermes_manifest()
         self.assertEqual(hermes["toolsets"][0]["name"], "panclaw")
         plugins = plugin_manifest()
         channels = {item["id"] for item in plugins["channels"]}
+        self.assertIn("wechat_personal_openclaw_weixin", channels)
         self.assertIn("wechat_official", channels)
         self.assertIn("lark", channels)
 

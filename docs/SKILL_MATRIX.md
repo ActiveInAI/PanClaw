@@ -4,7 +4,7 @@ PanClaw v0.1 registers these initial domains:
 
 | Domain | Skills |
 |---|---|
-| Messaging | personal WeChat official boundary, WeChat Official Account, WeCom, Feishu, Lark, DingTalk |
+| Messaging | personal WeChat via Tencent openclaw-weixin, WeChat Official Account, WeCom, Feishu, Lark, DingTalk |
 | Office/PDF | PyMuPDF, python-docx, openpyxl |
 | Image | Stable Diffusion WebUI API, Pillow |
 | Audio/Video | Whisper, FFmpeg |

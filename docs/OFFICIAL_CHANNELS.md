@@ -2,6 +2,8 @@
 
 PanClaw integrates messaging platforms only through official boundaries.
 
+The first-class integration list is maintained in [`CORE_INTEGRATIONS.md`](./CORE_INTEGRATIONS.md).
+
 ## OpenClaw
 
 Export a manifest:

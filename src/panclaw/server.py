@@ -13,7 +13,7 @@ from .channels import (
     parse_wechat_official_xml,
     verify_wechat_official_signature,
 )
-from .integrations import hermes_manifest, openclaw_manifest, plugin_manifest
+from .integrations import core_integrations_manifest, hermes_manifest, openclaw_manifest, plugin_manifest
 from .registry import get_skill, list_skills
 from .router import run_skill
 
@@ -65,6 +65,9 @@ class PanClawHandler(BaseHTTPRequestHandler):
             return
         if path == "/plugins":
             self._send_json(plugin_manifest(self._base_url()))
+            return
+        if path == "/integrations/core":
+            self._send_json(core_integrations_manifest(self._base_url()))
             return
         if path == "/channels/wechat/official/callback":
             self._handle_wechat_official_get(parsed.query)

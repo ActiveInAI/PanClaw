@@ -11,7 +11,7 @@ from panclaw.channels import (
     verify_wechat_official_signature,
     wechat_official_signature,
 )
-from panclaw.integrations import hermes_manifest, openclaw_manifest, plugin_manifest
+from panclaw.integrations import core_integrations_manifest, hermes_manifest, openclaw_manifest, plugin_manifest
 from panclaw.registry import get_skill
 from panclaw.router import run_skill
 
@@ -73,6 +73,18 @@ class ChannelTests(unittest.TestCase):
         self.assertGreater(len(openclaw_manifest()["skills"]), 1)
         hermes = hermes_manifest()
         self.assertEqual(hermes["toolsets"][0]["name"], "panclaw")
+        core = core_integrations_manifest()
+        core_ids = {item["id"] for item in core["integrations"]}
+        for integration_id in {
+            "openclaw",
+            "hermes_agent",
+            "wechat_personal_openclaw_weixin",
+            "wecom",
+            "feishu",
+            "lark",
+            "dingtalk",
+        }:
+            self.assertIn(integration_id, core_ids)
         plugins = plugin_manifest()
         channels = {item["id"] for item in plugins["channels"]}
         self.assertIn("wechat_personal_openclaw_weixin", channels)

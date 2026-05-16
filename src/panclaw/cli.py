@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from .integrations import hermes_manifest, openclaw_manifest, plugin_manifest
+from .integrations import core_integrations_manifest, hermes_manifest, openclaw_manifest, plugin_manifest
 from .registry import get_skill, list_skills
 from .router import run_skill
 from .server import serve
@@ -46,6 +46,10 @@ def main(argv: list[str] | None = None) -> int:
     p_plugins = sub.add_parser("export-plugins")
     p_plugins.add_argument("--output")
     p_plugins.add_argument("--base-url", default="http://127.0.0.1:8787")
+
+    p_core = sub.add_parser("export-core")
+    p_core.add_argument("--output")
+    p_core.add_argument("--base-url", default="http://127.0.0.1:8787")
 
     p_serve = sub.add_parser("serve")
     p_serve.add_argument("--host", default="127.0.0.1")
@@ -93,6 +97,14 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.cmd == "export-plugins":
         text = json.dumps(plugin_manifest(args.base_url), ensure_ascii=False, indent=2)
+        if args.output:
+            Path(args.output).write_text(text + "\n", encoding="utf-8")
+        else:
+            print(text)
+        return 0
+
+    if args.cmd == "export-core":
+        text = json.dumps(core_integrations_manifest(args.base_url), ensure_ascii=False, indent=2)
         if args.output:
             Path(args.output).write_text(text + "\n", encoding="utf-8")
         else:

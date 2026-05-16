@@ -8,6 +8,80 @@ from .registry import list_skills
 DEFAULT_BASE_URL = "http://127.0.0.1:8787"
 
 
+def core_integrations_manifest(base_url: str = DEFAULT_BASE_URL) -> dict[str, Any]:
+    return {
+        "name": "PanClaw Core Integrations",
+        "version": "0.2.1",
+        "base_url": base_url,
+        "priority": "p0",
+        "integrations": [
+            {
+                "id": "openclaw",
+                "name": "OpenClaw",
+                "type": "agent_runtime",
+                "manifest": f"{base_url}/integrations/openclaw/manifest",
+                "status": "integrated",
+                "skills": "all_panclaw_skills",
+            },
+            {
+                "id": "hermes_agent",
+                "name": "Hermes Agent",
+                "type": "agent_runtime",
+                "manifest": f"{base_url}/integrations/hermes/manifest",
+                "status": "integrated",
+                "skills": "all_panclaw_skills_as_http_tools",
+            },
+            {
+                "id": "wechat_personal_openclaw_weixin",
+                "name": "Personal WeChat via Tencent openclaw-weixin",
+                "type": "official_channel_plugin",
+                "source": "https://github.com/Tencent/openclaw-weixin",
+                "package": "@tencent-weixin/openclaw-weixin",
+                "cli_package": "@tencent-weixin/openclaw-weixin-cli",
+                "status": "integrated",
+                "skills": [
+                    "messaging.wechat.personal.openclaw_weixin.info",
+                    "messaging.wechat.personal.openclaw_weixin.quick_install",
+                    "messaging.wechat.personal.openclaw_weixin.manual_install",
+                    "messaging.wechat.personal.openclaw_weixin.login",
+                    "messaging.wechat.personal.openclaw_weixin.status",
+                ],
+            },
+            {
+                "id": "wecom",
+                "name": "WeCom",
+                "type": "official_channel_plugin",
+                "status": "integrated",
+                "skills": ["messaging.wecom.webhook.send"],
+            },
+            {
+                "id": "feishu",
+                "name": "Feishu",
+                "type": "official_channel_plugin",
+                "status": "integrated",
+                "skills": ["messaging.feishu.webhook.send"],
+                "events": f"{base_url}/channels/feishu/events",
+            },
+            {
+                "id": "lark",
+                "name": "Lark",
+                "type": "official_channel_plugin",
+                "status": "integrated",
+                "skills": ["messaging.lark.webhook.send"],
+                "events": f"{base_url}/channels/lark/events",
+            },
+            {
+                "id": "dingtalk",
+                "name": "DingTalk",
+                "type": "official_channel_plugin",
+                "status": "integrated",
+                "skills": ["messaging.dingtalk.webhook.send"],
+                "events": f"{base_url}/channels/dingtalk/events",
+            },
+        ],
+    }
+
+
 def openclaw_manifest(base_url: str = DEFAULT_BASE_URL) -> dict[str, Any]:
     return {
         "name": "panclaw",

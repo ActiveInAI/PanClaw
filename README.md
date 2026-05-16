@@ -23,6 +23,7 @@ env PYTHONPATH=src python3 -m panclaw run observability.local.snapshot --payload
 env PYTHONPATH=src python3 -m panclaw export-openclaw
 env PYTHONPATH=src python3 -m panclaw export-hermes
 env PYTHONPATH=src python3 -m panclaw export-plugins
+env PYTHONPATH=src python3 -m panclaw export-core
 env PYTHONPATH=src python3 -m panclaw run messaging.wechat.personal.openclaw_weixin.quick_install
 env PYTHONPATH=src python3 -m panclaw serve --host 127.0.0.1 --port 8787
 ```
@@ -43,6 +44,7 @@ Integration endpoints:
 ```text
 GET /integrations/openclaw/manifest
 GET /integrations/hermes/manifest
+GET /integrations/core
 GET /plugins
 GET/POST /channels/wechat/official/callback
 POST /channels/feishu/events

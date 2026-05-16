@@ -4,7 +4,7 @@ PanClaw v0.1 registers these initial domains:
 
 | Domain | Skills |
 |---|---|
-| Messaging | personal WeChat official boundary, WeCom, Feishu, DingTalk |
+| Messaging | personal WeChat official boundary, WeChat Official Account, WeCom, Feishu, Lark, DingTalk |
 | Office/PDF | PyMuPDF, python-docx, openpyxl |
 | Image | Stable Diffusion WebUI API, Pillow |
 | Audio/Video | Whisper, FFmpeg |
@@ -21,4 +21,3 @@ PanClaw v0.1 registers these initial domains:
 | Culture/Feng Shui | Lunar calendar adapter boundary |
 
 The matrix is an execution boundary, not a claim that all upstream dependencies are installed. Every skill reports `dry_run`, `blocked`, `not_configured` or `ok` explicitly.
-

@@ -1,12 +1,14 @@
 {
   "name": "panclaw",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Audited skill router for OpenClaw and Hermes-style agents.",
   "api": {
     "type": "http",
     "base_url": "http://127.0.0.1:8787",
     "skills_endpoint": "/skills",
-    "run_endpoint_template": "/skills/{skill_id}/run"
+    "run_endpoint_template": "/skills/{skill_id}/run",
+    "manifest_endpoint": "/integrations/openclaw/manifest",
+    "plugins_endpoint": "/plugins"
   },
   "security": {
     "default_mode": "dry_run",
@@ -14,4 +16,3 @@
     "audit_env": "PANCLAW_AUDIT_LOG"
   }
 }
-

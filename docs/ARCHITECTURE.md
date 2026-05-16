@@ -8,7 +8,7 @@ It is not a fork of OpenClaw or Hermes Agent. It is an adapter layer that can be
 
 ## Layers
 
-1. `ChannelGateway`: WeCom, Feishu, DingTalk, official WeChat-compatible channels and future OpenClaw channels.
+1. `ChannelGateway`: WeChat Official Account, WeCom, Feishu, Lark, DingTalk and future OpenClaw channels.
 2. `AgentOrchestrator`: planner/generator/evaluator separation and long-running job state.
 3. `SkillRegistry`: data-driven catalog of capabilities, permissions, schemas, risk and upstreams.
 4. `ToolRouter`: one entry point for every skill call.
@@ -46,4 +46,3 @@ Each skill records:
 - license boundary
 
 The catalog in `src/panclaw/catalog.py` is the source of truth.
-

@@ -5,7 +5,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-from .registry import as_openclaw_manifest, get_skill, list_skills
+from .integrations import hermes_manifest, openclaw_manifest, plugin_manifest
+from .registry import get_skill, list_skills
 from .router import run_skill
 from .server import serve
 
@@ -36,6 +37,15 @@ def main(argv: list[str] | None = None) -> int:
 
     p_export = sub.add_parser("export-openclaw")
     p_export.add_argument("--output")
+    p_export.add_argument("--base-url", default="http://127.0.0.1:8787")
+
+    p_hermes = sub.add_parser("export-hermes")
+    p_hermes.add_argument("--output")
+    p_hermes.add_argument("--base-url", default="http://127.0.0.1:8787")
+
+    p_plugins = sub.add_parser("export-plugins")
+    p_plugins.add_argument("--output")
+    p_plugins.add_argument("--base-url", default="http://127.0.0.1:8787")
 
     p_serve = sub.add_parser("serve")
     p_serve.add_argument("--host", default="127.0.0.1")
@@ -65,8 +75,24 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if result.status in {"ok", "dry_run", "not_configured", "blocked"} else 1
 
     if args.cmd == "export-openclaw":
-        manifest = as_openclaw_manifest()
+        manifest = openclaw_manifest(args.base_url)
         text = json.dumps(manifest, ensure_ascii=False, indent=2)
+        if args.output:
+            Path(args.output).write_text(text + "\n", encoding="utf-8")
+        else:
+            print(text)
+        return 0
+
+    if args.cmd == "export-hermes":
+        text = json.dumps(hermes_manifest(args.base_url), ensure_ascii=False, indent=2)
+        if args.output:
+            Path(args.output).write_text(text + "\n", encoding="utf-8")
+        else:
+            print(text)
+        return 0
+
+    if args.cmd == "export-plugins":
+        text = json.dumps(plugin_manifest(args.base_url), ensure_ascii=False, indent=2)
         if args.output:
             Path(args.output).write_text(text + "\n", encoding="utf-8")
         else:
@@ -78,4 +104,3 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     return 2
-

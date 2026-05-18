@@ -73,4 +73,4 @@ PanClaw references OpenClaw and Hermes Agent as integration targets, not vendore
 
 ## Project Status
 
-`v0.5.1` validates the release workflow against the upcoming GitHub Actions Node 24 runtime.
+`v0.6.0` adds simulated usage smoke tests for desktop, mobile and architecture-specific release artifacts.

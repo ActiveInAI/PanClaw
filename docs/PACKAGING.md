@@ -57,3 +57,11 @@ The release matrix is enforced by:
 ```bash
 python3 scripts/check_release_matrix.py
 ```
+
+Each release job also runs simulated usage tests against the artifacts it just built:
+
+```bash
+python3 scripts/smoke_artifacts.py desktop --target linux-x64
+python3 scripts/smoke_artifacts.py android
+python3 scripts/smoke_artifacts.py ios
+```

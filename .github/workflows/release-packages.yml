@@ -65,6 +65,9 @@ jobs:
             python scripts/build_artifacts.py --target "${{ matrix.target }}"
           fi
 
+      - name: Smoke artifacts
+        run: python scripts/smoke_artifacts.py desktop --target "${{ matrix.target }}"
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -137,6 +140,9 @@ jobs:
           cp mobile/android/app/build/outputs/apk/debug/app-debug.apk dist/panclaw-${{ steps.version.outputs.value }}-android-arm64-debug.apk
           cp mobile/android/app/build/outputs/bundle/debug/app-debug.aab dist/panclaw-${{ steps.version.outputs.value }}-android-arm64-debug.aab
 
+      - name: Smoke Android artifacts
+        run: python scripts/smoke_artifacts.py android
+
       - name: Upload Android artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -164,6 +170,9 @@ jobs:
 
       - name: Build unsigned iOS shell artifacts
         run: python scripts/build_ios_unsigned.py --version "${{ steps.version.outputs.value }}"
+
+      - name: Smoke iOS artifacts
+        run: python scripts/smoke_artifacts.py ios
 
       - name: Upload iOS artifacts
         uses: actions/upload-artifact@v4

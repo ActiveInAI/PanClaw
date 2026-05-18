@@ -1,6 +1,6 @@
 {
   "name": "panclaw",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Audited skill router for OpenClaw and Hermes-style agents.",
   "api": {
     "type": "http",

@@ -72,4 +72,4 @@ PanClaw references OpenClaw and Hermes Agent as integration targets, not vendore
 
 ## Project Status
 
-`v0.3.0` adds the cross-platform packaging and release artifact pipeline.
+`v0.3.3` adds the cross-platform packaging and release artifact pipeline.

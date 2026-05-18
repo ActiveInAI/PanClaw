@@ -112,4 +112,14 @@ jobs:
         run: |
           tag="${GITHUB_REF_NAME}"
           gh release create "$tag" --title "PanClaw $tag" --notes "Automated PanClaw package release." || true
-          find release-artifacts -maxdepth 3 -type f -print0 | xargs -0 gh release upload "$tag" --clobber
+          mkdir -p release-upload
+          while IFS= read -r -d '' file; do
+            parent="$(basename "$(dirname "$file")")"
+            base="$(basename "$file")"
+            dest="release-upload/$base"
+            if [ -e "$dest" ]; then
+              dest="release-upload/${parent}-${base}"
+            fi
+            cp "$file" "$dest"
+          done < <(find release-artifacts -maxdepth 3 -type f -print0)
+          gh release upload "$tag" release-upload/* --clobber

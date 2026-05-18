@@ -28,4 +28,4 @@ Implementation options:
 - BeeWare Briefcase iOS backend for Python-native packaging.
 - Swift shell that embeds Python and starts `panclaw.server`.
 
-CI builds `PanClaw-0.4.0-ios-arm64-unsigned.ipa` and `PanClaw-0.4.0-ios-arm64.xcarchive.zip`.
+CI builds `PanClaw-<version>-ios-arm64-unsigned.ipa` and `PanClaw-<version>-ios-arm64.xcarchive.zip`.

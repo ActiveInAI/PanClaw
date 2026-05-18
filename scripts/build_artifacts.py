@@ -35,8 +35,10 @@ def load_version() -> str:
 def clean() -> None:
     if BUILD.exists():
         shutil.rmtree(BUILD)
+    if DIST.exists():
+        shutil.rmtree(DIST)
     BUILD.mkdir(parents=True)
-    DIST.mkdir(parents=True, exist_ok=True)
+    DIST.mkdir(parents=True)
 
 
 def copy_tree() -> Path:
@@ -193,7 +195,7 @@ def try_pyinstaller(version: str, target_id: str) -> Path | None:
             "--name",
             Path(name).stem,
             "--distpath",
-            str(DIST / "pyinstaller"),
+            str(BUILD / "pyinstaller-dist"),
             "--workpath",
             str(BUILD / "pyinstaller-work"),
             "--specpath",
@@ -201,9 +203,9 @@ def try_pyinstaller(version: str, target_id: str) -> Path | None:
             str(ROOT / "src" / "panclaw" / "__main__.py"),
         ]
     )
-    built = DIST / "pyinstaller" / name
+    built = BUILD / "pyinstaller-dist" / name
     if not built.exists():
-        built = DIST / "pyinstaller" / Path(name).stem
+        built = BUILD / "pyinstaller-dist" / Path(name).stem
     if not built.exists():
         return None
     suffix = ".exe" if platform.system().lower() == "windows" else ""

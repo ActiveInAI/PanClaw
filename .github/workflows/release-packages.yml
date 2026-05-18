@@ -99,6 +99,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Read package version
+        id: version
+        shell: bash
+        run: |
+          version="$(python -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])')"
+          echo "value=$version" >> "$GITHUB_OUTPUT"
+
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
@@ -124,8 +131,8 @@ jobs:
       - name: Collect Android artifacts
         run: |
           mkdir -p dist
-          cp mobile/android/app/build/outputs/apk/debug/app-debug.apk dist/panclaw-0.4.0-android-arm64-debug.apk
-          cp mobile/android/app/build/outputs/bundle/debug/app-debug.aab dist/panclaw-0.4.0-android-arm64-debug.aab
+          cp mobile/android/app/build/outputs/apk/debug/app-debug.apk dist/panclaw-${{ steps.version.outputs.value }}-android-arm64-debug.apk
+          cp mobile/android/app/build/outputs/bundle/debug/app-debug.aab dist/panclaw-${{ steps.version.outputs.value }}-android-arm64-debug.aab
 
       - name: Upload Android artifacts
         uses: actions/upload-artifact@v4
@@ -145,8 +152,15 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Read package version
+        id: version
+        shell: bash
+        run: |
+          version="$(python -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])')"
+          echo "value=$version" >> "$GITHUB_OUTPUT"
+
       - name: Build unsigned iOS shell artifacts
-        run: python scripts/build_ios_unsigned.py --version 0.4.0
+        run: python scripts/build_ios_unsigned.py --version "${{ steps.version.outputs.value }}"
 
       - name: Upload iOS artifacts
         uses: actions/upload-artifact@v4
@@ -183,5 +197,5 @@ jobs:
               dest="release-upload/${parent}-${base}"
             fi
             cp "$file" "$dest"
-          done < <(find release-artifacts -maxdepth 3 -type f -print0)
+          done < <(find release-artifacts -mindepth 2 -maxdepth 2 -type f -print0)
           gh release upload "$tag" release-upload/* --clobber

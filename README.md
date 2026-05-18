@@ -72,4 +72,4 @@ PanClaw references OpenClaw and Hermes Agent as integration targets, not vendore
 
 ## Project Status
 
-`v0.4.0` adds Android APK/AAB and unsigned iOS shell artifacts to the release pipeline.
+`v0.4.1` adds Android APK/AAB and unsigned iOS shell artifacts to the release pipeline with cleaner release asset selection.

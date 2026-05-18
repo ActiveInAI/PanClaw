@@ -29,4 +29,4 @@ Implementation options:
 - Kotlin shell that embeds a Python runtime and starts `panclaw.server`.
 - Termux-compatible package for developer installs.
 
-CI builds `panclaw-0.4.0-android-arm64-debug.apk` and `panclaw-0.4.0-android-arm64-debug.aab`.
+CI builds `panclaw-<version>-android-arm64-debug.apk` and `panclaw-<version>-android-arm64-debug.aab`.

@@ -194,13 +194,15 @@ def try_pyinstaller(version: str, target_id: str) -> Path | None:
             "--onefile",
             "--name",
             Path(name).stem,
+            "--paths",
+            str(SRC),
             "--distpath",
             str(BUILD / "pyinstaller-dist"),
             "--workpath",
             str(BUILD / "pyinstaller-work"),
             "--specpath",
             str(BUILD / "pyinstaller-spec"),
-            str(ROOT / "src" / "panclaw" / "__main__.py"),
+            str(ROOT / "scripts" / "pyinstaller_entry.py"),
         ]
     )
     built = BUILD / "pyinstaller-dist" / name

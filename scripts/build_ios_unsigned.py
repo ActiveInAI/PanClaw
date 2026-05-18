@@ -47,7 +47,7 @@ def zip_dir(root: Path, target: Path) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--version", default="0.6.0")
+    parser.add_argument("--version", default="0.6.1")
     args = parser.parse_args()
     DIST.mkdir(exist_ok=True)
     build_root = ROOT / "build" / "ios-unsigned"

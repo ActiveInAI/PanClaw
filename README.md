@@ -73,4 +73,4 @@ PanClaw references OpenClaw and Hermes Agent as integration targets, not vendore
 
 ## Project Status
 
-`v0.6.0` adds simulated usage smoke tests for desktop, mobile and architecture-specific release artifacts.
+`v0.6.1` adds simulated usage smoke tests and fixes the PyInstaller onefile entrypoint they exposed.

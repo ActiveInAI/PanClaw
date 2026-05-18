@@ -187,11 +187,19 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           tag="${GITHUB_REF_NAME}"
+          version="${tag#v}"
           gh release create "$tag" --title "PanClaw $tag" --notes "Automated PanClaw package release." || true
           mkdir -p release-upload
           while IFS= read -r -d '' file; do
             parent="$(basename "$(dirname "$file")")"
             base="$(basename "$file")"
+            case "$base" in
+              "SHA256SUMS"|"panclaw-${version}.pyz"|"panclaw-${version}-py3-none-any.whl"|"panclaw-${version}.tar.gz")
+                if [ "$parent" != "panclaw-linux-x64" ]; then
+                  continue
+                fi
+                ;;
+            esac
             dest="release-upload/$base"
             if [ -e "$dest" ]; then
               dest="release-upload/${parent}-${base}"

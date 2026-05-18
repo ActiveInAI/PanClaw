@@ -1,0 +1,113 @@
+name: release-packages
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  desktop:
+    name: build-${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: linux-x64
+            runner: ubuntu-24.04
+            skip_binary: "false"
+          - target: linux-arm64
+            runner: ubuntu-24.04-arm
+            skip_binary: "false"
+          - target: windows-x64
+            runner: windows-latest
+            skip_binary: "false"
+          - target: windows-arm64
+            runner: windows-latest
+            skip_binary: "true"
+          - target: macos-x64
+            runner: macos-13
+            skip_binary: "false"
+          - target: macos-arm64
+            runner: macos-14
+            skip_binary: "false"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -r requirements-build.txt
+
+      - name: Test
+        run: python -m pytest
+
+      - name: Build artifacts
+        shell: bash
+        run: |
+          if [ "${{ matrix.skip_binary }}" = "true" ]; then
+            python scripts/build_artifacts.py --target "${{ matrix.target }}" --skip-binary
+          else
+            python scripts/build_artifacts.py --target "${{ matrix.target }}"
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: panclaw-${{ matrix.target }}
+          path: dist/*
+
+  mobile-contracts:
+    name: mobile-contracts
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify mobile contracts
+        run: |
+          test -f mobile/android/README.md
+          test -f mobile/ios/README.md
+          test -f packaging/targets.json
+          python -m json.tool packaging/targets.json >/dev/null
+          python scripts/check_release_matrix.py
+
+      - name: Upload mobile target contracts
+        uses: actions/upload-artifact@v4
+        with:
+          name: panclaw-mobile-contracts
+          path: |
+            mobile/android/README.md
+            mobile/ios/README.md
+            packaging/targets.json
+
+  release:
+    name: publish-github-release
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [desktop, mobile-contracts]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-artifacts
+
+      - name: Create release and upload artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          gh release create "$tag" --title "PanClaw $tag" --notes "Automated PanClaw package release." || true
+          find release-artifacts -maxdepth 3 -type f -print0 | xargs -0 gh release upload "$tag" --clobber

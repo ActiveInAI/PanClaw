@@ -27,7 +27,7 @@ def require_skill(skill_id: str) -> SkillSpec:
 def as_openclaw_manifest() -> dict[str, object]:
     return {
         "name": "panclaw",
-        "version": "0.1.0",
+        "version": "0.3.0",
         "skills": [
             {
                 "id": skill.id,
@@ -43,4 +43,3 @@ def as_openclaw_manifest() -> dict[str, object]:
             for skill in list_skills()
         ],
     }
-

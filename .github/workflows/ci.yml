@@ -1,0 +1,27 @@
+name: ci
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run tests
+        run: |
+          PYTHONPATH=src python -m unittest discover -s tests
+          PYTHONPATH=src python -m compileall -q src tests
+          PYTHONPATH=src python -m panclaw export-core >/tmp/panclaw-core.json
+          python -m json.tool /tmp/panclaw-core.json >/dev/null
+          python scripts/check_release_matrix.py

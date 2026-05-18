@@ -23,7 +23,7 @@ def _json_bytes(data: object, status: int = 200) -> tuple[int, bytes]:
 
 
 class PanClawHandler(BaseHTTPRequestHandler):
-    server_version = "PanClaw/0.1"
+    server_version = "PanClaw/0.3"
 
     def _send_json(self, data: object, status: int = 200) -> None:
         code, body = _json_bytes(data, status)

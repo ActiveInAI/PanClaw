@@ -64,6 +64,7 @@ PanClaw will not silently perform destructive or regulated actions. These always
 - Produce medical, legal, financial, engineering, military or safety-sensitive outputs.
 
 Official channel setup is documented in `docs/OFFICIAL_CHANNELS.md`.
+Packaging and installer targets are documented in `docs/PACKAGING.md`.
 
 ## Upstream Boundary
 
@@ -71,4 +72,4 @@ PanClaw references OpenClaw and Hermes Agent as integration targets, not vendore
 
 ## Project Status
 
-`v0.2.0` adds OpenClaw/Hermes manifests and official messaging channel plugin endpoints.
+`v0.3.0` adds the cross-platform packaging and release artifact pipeline.

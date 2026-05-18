@@ -1,0 +1,72 @@
+{
+  "version": "0.3.0",
+  "desktop": [
+    {
+      "id": "windows-x64",
+      "os": "windows",
+      "arch": "x64",
+      "runner": "windows-2025",
+      "artifacts": ["zip", "exe"],
+      "status": "ci_build"
+    },
+    {
+      "id": "windows-arm64",
+      "os": "windows",
+      "arch": "arm64",
+      "runner": "windows-2025",
+      "artifacts": ["zip"],
+      "status": "ci_cross_package"
+    },
+    {
+      "id": "macos-x64",
+      "os": "macos",
+      "arch": "x64",
+      "runner": "macos-15-intel",
+      "artifacts": ["tar.gz", "app.zip"],
+      "status": "ci_build"
+    },
+    {
+      "id": "macos-arm64",
+      "os": "macos",
+      "arch": "arm64",
+      "runner": "macos-15",
+      "artifacts": ["tar.gz", "app.zip"],
+      "status": "ci_build"
+    },
+    {
+      "id": "linux-x64",
+      "os": "linux",
+      "arch": "x64",
+      "runner": "ubuntu-24.04",
+      "artifacts": ["tar.gz", "deb"],
+      "status": "ci_build"
+    },
+    {
+      "id": "linux-arm64",
+      "os": "linux",
+      "arch": "arm64",
+      "runner": "ubuntu-24.04-arm",
+      "artifacts": ["tar.gz", "deb"],
+      "status": "ci_build"
+    }
+  ],
+  "mobile": [
+    {
+      "id": "android-arm64",
+      "os": "android",
+      "arch": "arm64",
+      "artifacts": ["apk", "aab"],
+      "status": "mobile_shell_scaffold",
+      "requires": ["ANDROID_KEYSTORE_BASE64", "ANDROID_KEYSTORE_PASSWORD"]
+    },
+    {
+      "id": "ios-arm64",
+      "os": "ios",
+      "arch": "arm64",
+      "artifacts": ["ipa", "xcarchive"],
+      "status": "mobile_shell_scaffold",
+      "requires": ["APPLE_DEVELOPER_TEAM_ID", "IOS_SIGNING_CERTIFICATE_BASE64", "IOS_PROVISIONING_PROFILE_BASE64"]
+    }
+  ]
+}
+

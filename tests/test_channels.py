@@ -74,6 +74,7 @@ class ChannelTests(unittest.TestCase):
         hermes = hermes_manifest()
         self.assertEqual(hermes["toolsets"][0]["name"], "panclaw")
         core = core_integrations_manifest()
+        self.assertEqual(core["health"], "http://127.0.0.1:8787/channels/health")
         core_ids = {item["id"] for item in core["integrations"]}
         for integration_id in {
             "openclaw",
@@ -90,6 +91,14 @@ class ChannelTests(unittest.TestCase):
         self.assertIn("wechat_personal_openclaw_weixin", channels)
         self.assertIn("wechat_official", channels)
         self.assertIn("lark", channels)
+
+    def test_official_channel_health(self) -> None:
+        result = run_skill("messaging.channels.health", {"dry_run": False})
+        self.assertEqual(result.status, "ok")
+        self.assertIn("channels", result.data)
+        channel_ids = {item["id"] for item in result.data["channels"]}
+        self.assertIn("wechat_personal_openclaw_weixin", channel_ids)
+        self.assertIn("dingtalk", channel_ids)
 
 
 if __name__ == "__main__":

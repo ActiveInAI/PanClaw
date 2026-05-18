@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from typing import Any
 from urllib.request import Request, urlopen
 
@@ -17,6 +18,65 @@ def wechat_personal_boundary(payload: dict[str, Any]) -> dict[str, Any]:
         "cli_package": "@tencent-weixin/openclaw-weixin-cli",
         "source": "https://github.com/Tencent/openclaw-weixin",
         "dry_run": payload.get("dry_run", True),
+    }
+
+
+def official_channel_health(payload: dict[str, Any]) -> dict[str, Any]:
+    del payload
+    openclaw_path = shutil.which("openclaw")
+    send_enabled = require_enabled("PANCLAW_ENABLE_MESSAGE_SEND")
+    channels = [
+        {
+            "id": "wechat_personal_openclaw_weixin",
+            "name": "Personal WeChat via Tencent openclaw-weixin",
+            "configured": bool(openclaw_path),
+            "send_enabled": bool(openclaw_path),
+            "receive_enabled": bool(openclaw_path),
+            "checks": {
+                "openclaw_cli": bool(openclaw_path),
+                "plugin_package": "@tencent-weixin/openclaw-weixin",
+                "channel_id": "openclaw-weixin",
+            },
+        },
+        {
+            "id": "wechat_official",
+            "name": "WeChat Official Account",
+            "configured": bool(require_env("WECHAT_OFFICIAL_TOKEN") or require_env("WECHAT_OFFICIAL_ACCESS_TOKEN")),
+            "send_enabled": send_enabled and bool(require_env("WECHAT_OFFICIAL_ACCESS_TOKEN")),
+            "receive_enabled": bool(require_env("WECHAT_OFFICIAL_TOKEN")),
+            "checks": {
+                "WECHAT_OFFICIAL_TOKEN": bool(require_env("WECHAT_OFFICIAL_TOKEN")),
+                "WECHAT_OFFICIAL_ACCESS_TOKEN": bool(require_env("WECHAT_OFFICIAL_ACCESS_TOKEN")),
+            },
+        },
+        _webhook_channel("wecom", "WeCom", "WECOM_WEBHOOK_URL", None, send_enabled),
+        _webhook_channel("feishu", "Feishu", "FEISHU_WEBHOOK_URL", "FEISHU_WEBHOOK_SECRET", send_enabled),
+        _webhook_channel("lark", "Lark", "LARK_WEBHOOK_URL", "LARK_WEBHOOK_SECRET", send_enabled),
+        _webhook_channel("dingtalk", "DingTalk", "DINGTALK_WEBHOOK_URL", "DINGTALK_WEBHOOK_SECRET", send_enabled),
+    ]
+    configured = sum(1 for channel in channels if channel["configured"])
+    return {
+        "status": "ok",
+        "message": "Official channel health snapshot.",
+        "send_gate_enabled": send_enabled,
+        "configured_channels": configured,
+        "total_channels": len(channels),
+        "channels": channels,
+    }
+
+
+def _webhook_channel(channel_id: str, name: str, url_env: str, secret_env: str | None, send_enabled: bool) -> dict[str, Any]:
+    url_configured = bool(require_env(url_env))
+    checks: dict[str, Any] = {url_env: url_configured}
+    if secret_env:
+        checks[secret_env] = bool(require_env(secret_env))
+    return {
+        "id": channel_id,
+        "name": name,
+        "configured": url_configured,
+        "send_enabled": send_enabled and url_configured,
+        "receive_enabled": False,
+        "checks": checks,
     }
 
 

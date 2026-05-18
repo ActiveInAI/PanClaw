@@ -46,6 +46,7 @@ GET /integrations/openclaw/manifest
 GET /integrations/hermes/manifest
 GET /integrations/core
 GET /plugins
+GET /channels/health
 GET/POST /channels/wechat/official/callback
 POST /channels/feishu/events
 POST /channels/lark/events
@@ -72,4 +73,4 @@ PanClaw references OpenClaw and Hermes Agent as integration targets, not vendore
 
 ## Project Status
 
-`v0.4.2` adds Android APK/AAB and unsigned iOS shell artifacts to the release pipeline with cleaner release asset selection.
+`v0.5.0` adds the official channel health endpoint for OpenClaw Weixin, WeChat Official Account, WeCom, Feishu, Lark and DingTalk.

@@ -11,9 +11,10 @@ DEFAULT_BASE_URL = "http://127.0.0.1:8787"
 def core_integrations_manifest(base_url: str = DEFAULT_BASE_URL) -> dict[str, Any]:
     return {
         "name": "PanClaw Core Integrations",
-        "version": "0.4.2",
+        "version": "0.5.0",
         "base_url": base_url,
         "priority": "p0",
+        "health": f"{base_url}/channels/health",
         "integrations": [
             {
                 "id": "openclaw",
@@ -86,7 +87,7 @@ def openclaw_manifest(base_url: str = DEFAULT_BASE_URL) -> dict[str, Any]:
     return {
         "name": "panclaw",
         "display_name": "PanClaw",
-        "version": "0.4.2",
+        "version": "0.5.0",
         "description": "Audited Skills and official messaging plugins for OpenClaw-compatible agents.",
         "type": "http_skill_provider",
         "base_url": base_url,
@@ -104,7 +105,7 @@ def openclaw_manifest(base_url: str = DEFAULT_BASE_URL) -> dict[str, Any]:
 def hermes_manifest(base_url: str = DEFAULT_BASE_URL) -> dict[str, Any]:
     return {
         "name": "panclaw",
-        "version": "0.4.2",
+        "version": "0.5.0",
         "description": "PanClaw HTTP tools for Hermes Agent.",
         "toolsets": [
             {
@@ -124,8 +125,9 @@ def hermes_manifest(base_url: str = DEFAULT_BASE_URL) -> dict[str, Any]:
 def plugin_manifest(base_url: str = DEFAULT_BASE_URL) -> dict[str, Any]:
     return {
         "name": "PanClaw Official Channel Plugins",
-        "version": "0.4.2",
+        "version": "0.5.0",
         "base_url": base_url,
+        "health": f"{base_url}/channels/health",
         "channels": [
             {
                 "id": "wechat_personal_openclaw_weixin",

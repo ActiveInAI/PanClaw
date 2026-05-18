@@ -17,6 +17,7 @@ GET /integrations/core
 GET /integrations/openclaw/manifest
 GET /integrations/hermes/manifest
 GET /plugins
+GET /channels/health
 ```
 
 CLI export:
@@ -57,6 +58,7 @@ messaging.wecom.webhook.send
 messaging.feishu.webhook.send
 messaging.lark.webhook.send
 messaging.dingtalk.webhook.send
+messaging.channels.health
 ```
 
 Feishu, Lark and DingTalk event endpoints:
@@ -68,4 +70,3 @@ POST /channels/dingtalk/events
 ```
 
 Real sending and plugin mutation require explicit approval and environment gates.
-

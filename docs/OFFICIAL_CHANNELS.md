@@ -33,6 +33,7 @@ Runtime endpoint:
 
 ```text
 GET /integrations/hermes/manifest
+GET /channels/health
 ```
 
 Hermes tools use the same PanClaw approval header:

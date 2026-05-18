@@ -10,8 +10,8 @@ PanClaw release targets:
 | macOS arm64 | `.tar.gz`, app zip | GitHub Actions |
 | Linux x64 | `.tar.gz`, `.deb` target | GitHub Actions |
 | Linux arm64 | `.tar.gz`, `.deb` target | GitHub Actions |
-| Android arm64 | `.apk`, `.aab` | gated mobile shell |
-| iOS arm64 | `.xcarchive`, `.ipa` | gated mobile shell |
+| Android arm64 | `.apk`, `.aab` | GitHub Actions debug shell |
+| iOS arm64 | `.xcarchive`, `.ipa` | unsigned shell, signing gated |
 
 ## Local Build
 
@@ -50,7 +50,7 @@ powershell -ExecutionPolicy Bypass -File packaging/installers/install.ps1
 
 The workflow `.github/workflows/release-packages.yml` builds desktop/server packages on release tags.
 
-Android and iOS jobs are intentionally gated because real mobile packages require signing credentials and a configured mobile shell. The repository contains the target contracts in `mobile/android/README.md` and `mobile/ios/README.md`.
+Android debug APK/AAB packages are built by CI. iOS unsigned shell artifacts are built by CI; App Store/TestFlight/device installation still requires Apple signing credentials.
 
 The release matrix is enforced by:
 

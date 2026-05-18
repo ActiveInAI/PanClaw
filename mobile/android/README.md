@@ -1,6 +1,6 @@
 # PanClaw Android Package
 
-Android packaging is a first-class release target, but it requires a mobile shell and signing identity.
+Android packaging is a first-class release target. CI builds a debug mobile shell immediately; store-ready release builds require signing identity.
 
 Target artifacts:
 
@@ -29,5 +29,4 @@ Implementation options:
 - Kotlin shell that embeds a Python runtime and starts `panclaw.server`.
 - Termux-compatible package for developer installs.
 
-The CI workflow keeps Android as a gated target until the package name, icon, signing key and mobile shell are configured.
-
+CI builds `panclaw-0.4.0-android-arm64-debug.apk` and `panclaw-0.4.0-android-arm64-debug.aab`.

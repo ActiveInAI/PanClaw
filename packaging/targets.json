@@ -1,5 +1,5 @@
 {
-  "version": "0.3.3",
+  "version": "0.4.0",
   "desktop": [
     {
       "id": "windows-x64",
@@ -56,7 +56,7 @@
       "os": "android",
       "arch": "arm64",
       "artifacts": ["apk", "aab"],
-      "status": "mobile_shell_scaffold",
+      "status": "ci_debug_shell",
       "requires": ["ANDROID_KEYSTORE_BASE64", "ANDROID_KEYSTORE_PASSWORD"]
     },
     {
@@ -64,7 +64,7 @@
       "os": "ios",
       "arch": "arm64",
       "artifacts": ["ipa", "xcarchive"],
-      "status": "mobile_shell_scaffold",
+      "status": "ci_unsigned_shell",
       "requires": ["APPLE_DEVELOPER_TEAM_ID", "IOS_SIGNING_CERTIFICATE_BASE64", "IOS_PROVISIONING_PROFILE_BASE64"]
     }
   ]

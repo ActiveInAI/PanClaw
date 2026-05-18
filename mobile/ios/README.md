@@ -1,6 +1,6 @@
 # PanClaw iOS Package
 
-iOS packaging is a first-class release target, but it cannot produce a distributable IPA without Apple signing assets.
+iOS packaging is a first-class release target. CI builds unsigned shell artifacts immediately; distributable IPA still requires Apple signing assets.
 
 Target artifacts:
 
@@ -28,5 +28,4 @@ Implementation options:
 - BeeWare Briefcase iOS backend for Python-native packaging.
 - Swift shell that embeds Python and starts `panclaw.server`.
 
-The CI workflow keeps iOS as a gated target until bundle ID, signing certificates, provisioning profiles and app metadata are configured.
-
+CI builds `PanClaw-0.4.0-ios-arm64-unsigned.ipa` and `PanClaw-0.4.0-ios-arm64.xcarchive.zip`.

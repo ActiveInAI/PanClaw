@@ -73,4 +73,4 @@ PanClaw references OpenClaw and Hermes Agent as integration targets, not vendore
 
 ## Project Status
 
-`v0.5.0` adds the official channel health endpoint for OpenClaw Weixin, WeChat Official Account, WeCom, Feishu, Lark and DingTalk.
+`v0.5.1` validates the release workflow against the upcoming GitHub Actions Node 24 runtime.
